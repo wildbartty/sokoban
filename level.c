@@ -75,7 +75,7 @@ int setup_level(level* state) {
     move(state->player.y,state->player.x);
     
   }
-  return 1;
+  return 0;
 }
 
 int kill_level(level* state)
@@ -85,7 +85,7 @@ int kill_level(level* state)
   }
   free(state->board);
   free(state->board_string);
-  return 1;
+  return 0;
 }
 
 void print_level(level* state)
