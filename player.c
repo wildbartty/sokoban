@@ -26,28 +26,28 @@ int move_player_rel(level* state, int dir) {
         case 'k':
         case KEY_UP:
             move_player(state,y-1,x);
-            return 1;
+            return 0;
 	    break;
         case '2':
         case 'j':
         case KEY_DOWN:
             move_player(state,y+1,x);
-            return 1;
+            return 0;
 	    break;
         case '6':
         case 'l':
         case KEY_RIGHT:
             move_player(state,y,x+1);
-            return 1;
+            return 0;
 	    break;
         case '4':
         case 'h':
         case KEY_LEFT:
             move_player(state,y,x-1);
-            return 1;
+            return 0;
 	    break;
         default:
-            return 0;
+            return 1;
 	    break;
     }
 }
