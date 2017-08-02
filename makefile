@@ -2,7 +2,7 @@ CC = gcc
 SRC= main.c player.c level.c
 FILES = player.o level.o
 MAIN = main.o
-LIBS = `pkg-config --libs --cflags ncurses lua`
+LIBS = `pkg-config --libs --cflags ncurses `
 
 %.o: %.c $(SRC)
 	$(CC) -pg -Wall -c -o  $@ $< $(LIBS)
