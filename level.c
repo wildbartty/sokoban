@@ -1,12 +1,12 @@
 #include "sokoban.h"
 
-int setup_level(level* state) {
+int setup_level(level* state, lua_State *L) {
   /* allocates the variables in a level state */
   
   state->board_string=malloc(2);
   state->longest_line = 0;
   state->no_lines = 0;
-  file_to_string(&state->board_string,"first.level");
+  file_to_string(L,&state->board_string,"first.level");
   {
     char tmp_char = 'q';
     int cur_line_len = 0;
