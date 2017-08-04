@@ -94,7 +94,6 @@ int main () {
   file_to_string(L,test_string,"first.level");
   fprintf(stdout,"%s",test_string);
   free(test_string);
-
   lua_close(L);
   return 0;
 }
