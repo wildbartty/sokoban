@@ -9,22 +9,24 @@
 #include "level.h"
 #include "printstack.h"
 
-void print_lines(int y,int x,const char* string) {
-  move(y,x);
-  char val;
-  int index = 0;
-  val = string[index];
+void print_lines(lua_State* L)
+{
+  int y = lua_tonumber(L,1);
+  /* move(y,x); */
+  /* char val; */
+  /* int index = 0; */
+  /* val = string[index]; */
 
-  while (val != '\0') {
-    addch(val);
-  skip:
-    index++;
-    val = string[index];
-    if (val == '\n') {
-      move(++y,x);
-      goto skip;
-    }
-  }
+  /* while (val != '\0') { */
+  /*   addch(val); */
+  /* skip: */
+  /*   index++; */
+  /*   val = string[index]; */
+  /*   if (val == '\n') { */
+  /*     move(++y,x); */
+  /*     goto skip; */
+  /*   } */
+  /* } */
 }
 
 int file_to_string(lua_State* L, char** dest, const char* file) {
@@ -79,21 +81,6 @@ int main () {
   lua_State *L= luaL_newstate();
   luaL_openlibs(L);
   luaL_dofile(L,"file.lua");
-  /* initscr(); */
-  /* clear(); */
-  /* noecho(); */
-  /* cbreak(); */
-  /* keypad(stdscr,TRUE); */
-  /* level bob; */
-  /* setup_level(&bob,L); */
-  /* control_loop(&bob); */
-  /* endwin(); */
-  /* kill_level(&bob); */
-  char* test_string;
-  test_string = malloc(sizeof(char)*400);
-  file_to_string(L,test_string,"first.level");
-  fprintf(stdout,"%s",test_string);
-  free(test_string);
   lua_close(L);
   return 0;
 }

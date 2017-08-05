@@ -6,3 +6,5 @@ function load_level (str)
    local levelstr = file:read('a')
    return levelstr
 end
+
+io.write('hi'):
