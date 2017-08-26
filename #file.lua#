@@ -7,4 +7,5 @@ function load_level (str)
    return levelstr
 end
 
-io.write('hi'):
+io.write('hi');
+io.write('this is a test');
