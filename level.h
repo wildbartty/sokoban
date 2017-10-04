@@ -4,7 +4,7 @@
 #include "sokoban.h"
 
 
-int setup_level(level*,lua_State*);
+int setup_level(level*);
 int kill_level(level*);
 void print_level(level*);
 int move_player_rel(level*,int);

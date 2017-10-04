@@ -29,34 +29,22 @@ void print_lines(lua_State* L)
   /* } */
 }
 
-int file_to_string(lua_State* L, char** dest, const char* file) {
- /*  FILE* fp = fopen(file, "r"); */
- /*  int file_size; */
- /*  char* buf; */
- /*  char* tmp; */
- /*  fseek(fp,0,SEEK_END); */
- /*  file_size = ftell(fp); */
- /*  rewind(fp); */
- /*  buf = malloc(sizeof(char) * file_size + 1); */
- /*  if (!dest) {goto freebuf;} */
- /*  fread(buf,sizeof(char),file_size+1,fp); */
- /*  fclose(fp); */
- /*  *dest = (char*) realloc(*dest,sizeof(char) * file_size + 1); */
- /*  strcpy(*dest,buf); */
- /*  free(buf); */
- /*  return 0; */
- /* freebuf: */
- /*  free(buf); */
- /*  return 1; */
-  lua_getglobal(L,"load_level"); /* stack: .. file func */
-  /* print_stack(L); */
-  lua_pushstring(L,file); /* stack: .. file */
-  /* print_stack(L); */
-  lua_pcall(L,1,1,0); /* stack: .. level */
-  /* print_stack(L); */
-  const char* val = lua_tostring(L,-1);
-  strcpy(dest,val);
-  lua_pop(L,-1);
+int file_to_string(char** dest, const char* file) {
+  FILE* fp = fopen(file, "r");
+  int file_size;
+  char* buf;
+  char* tmp;
+  fseek(fp,0,SEEK_END);
+  file_size = ftell(fp);
+  rewind(fp);
+  buf = malloc(sizeof(char) * file_size + 1);
+  if (!dest) {goto end;}
+  fread(buf,sizeof(char),file_size+1,fp);
+  fclose(fp);
+  *dest = (char*) realloc(*dest,sizeof(char) * file_size + 1);
+  strcpy(*dest,buf);
+ end:
+  free(buf);
   return 0;
 }
 
@@ -78,9 +66,9 @@ int control_loop(level* state) {
 
 
 int main () {
-  lua_State *L= luaL_newstate();
-  luaL_openlibs(L);
-  luaL_dofile(L,"file.lua");
-  lua_close(L);
+  level bob;
+  setup_level(&bob);
+  print_level(&bob);
+  kill_level(&bob);
   return 0;
 }

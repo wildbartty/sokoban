@@ -11,10 +11,10 @@ int check_collision(level* state, int y, int x) {
 
 void move_player(level* state, int y, int x) {
   if (check_collision(state,y,x)) {
-    state->board[state->player.x]
-      [state->player.y] = '.';
-    state->player.y = y;
-    state->player.x = x;
+    state->board[state->player[1]]
+      [state->player[0]] = '.';
+    state->player[0] = y;
+    state->player[1] = x;
     (state->board[x])[y] = '@';
   }
 }
@@ -23,8 +23,9 @@ int move_player_rel(level* state, int dir) {
   /* supports numpad arrow keys and hjkl
    * bindings */
   int y,x;
-  y = state->player.y;
-  x = state->player.x;
+  /* 0 is y; 1 is x */
+  y = state->player[0];
+  x = state->player[1];
   switch(dir) {
   case '8':
   case 'k':

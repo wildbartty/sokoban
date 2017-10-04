@@ -1,4 +1,4 @@
-#ifndef SOKOBAN_STRUCTS
+ #ifndef SOKOBAN_STRUCTS
 #define SOKOBAN_STRUCTS
 struct player{
     int x;
@@ -13,7 +13,7 @@ struct level {
     int longest_line;   /* the longest line in the level file */
     int no_lines;       /* the number of lines in the level file */
 
-    player player;      /* the state of the player in the level */
+    int* player;      /* the state of the player in the level */
     char** board;       /* the state of the level
                             and array that is longest_line* no lines big */
 };

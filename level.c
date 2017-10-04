@@ -1,12 +1,12 @@
 #include "sokoban.h"
 
-int setup_level(level* state, lua_State *L) {
+int setup_level(level* state) {
   /* allocates the variables in a level state */
-  
+  state->player = malloc(2);
   state->board_string=malloc(2);
   state->longest_line = 0;
   state->no_lines = 0;
-  file_to_string(L,state->board_string,"first.level");
+  file_to_string(state->board_string,"first.level");
   {
     char tmp_char = 'q';
     int cur_line_len = 0;
@@ -19,8 +19,8 @@ int setup_level(level* state, lua_State *L) {
 	/* state->no_lines,*/
 	/* cur_line_len);*/
 	
-	state->player.x=state->no_lines;
-	state->player.y=cur_line_len;
+	state->player[0]=state->no_lines;
+	state->player[1]=cur_line_len;
 	/* keep with the curses way */
 	cur_line_len++;
 	break;
@@ -49,7 +49,7 @@ int setup_level(level* state, lua_State *L) {
     state->board=malloc(sizeof(void*)*state->no_lines);
     /* setup the rows */
     for (int i = 0;i<state->no_lines;i++) {
-      state->board[i] = malloc(sizeof(char*) * state->no_lines);
+      state->board[i] = malloc(sizeof(char*) * state->longest_line);
       /* the board is no an empty array */
     }
     
@@ -72,7 +72,7 @@ int setup_level(level* state, lua_State *L) {
       }
     }
     
-    move(state->player.y,state->player.x);
+    move(state->player[1],state->player[0]);
     
   }
   return 0;
@@ -84,6 +84,7 @@ int kill_level(level* state)
     free(state->board[i]);
   }
   free(state->board);
+  free(state->player);
   free(state->board_string);
   return 0;
 }
