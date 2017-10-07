@@ -22,7 +22,8 @@ struct level {
   /* the next 2 variables are for bounds checking */
   int longest_line;   /* the longest line in the level file */
   int no_lines;       /* the number of lines in the level file */
-
+  int dimension;      /* the length of board_string to allow for newlines
+			 equal to longest_line*no_lines+no_lines */
   player* player;      /* the state of the player in the level */
   char** board;       /* the state of the level
 			 and array that is longest_line* no lines big */

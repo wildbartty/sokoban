@@ -5,7 +5,7 @@ MAIN = main.o
 LIBS = `pkg-config --libs --cflags ncurses lua`
 
 %.o: %.c $(SRC)
-	$(CC) -g -Wall -c -o  $@ $< $(LIBS)
+	$(CC) -g -O3 -Wall -c -o  $@ $< $(LIBS)
 
 make: $(MAIN) $(FILES)
 	$(CC) -o sokoban $(FILES) $(MAIN) $(LIBS)
