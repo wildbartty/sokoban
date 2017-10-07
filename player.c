@@ -6,7 +6,8 @@ void move_player(level* state, int y, int x)
   return 0;
 }
 
-int move_player_rel(level* state, int dir) {
+int move_player_rel(level* state, int dir)
+{
   /* supports numpad arrow keys and hjkl
    * bindings */
   int y,x;

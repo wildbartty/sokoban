@@ -5,6 +5,7 @@ struct player{
   int x;
   int y;
   char poses[5];
+  /* The value of the squares that the player can `see' */
 };
 
 #define PLAYER_HERE  0
