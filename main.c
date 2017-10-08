@@ -10,7 +10,7 @@ int main(int argc, char** argv)
 {
   level foo;
   load_level_string("first.level",&foo);
-  printf("%s",foo.board_string);
+  print_level(&foo);
   kill_level(&foo);
   return 0;
 }

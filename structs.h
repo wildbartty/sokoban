@@ -4,15 +4,19 @@
 struct player{
   int x;
   int y;
-  char poses[5];
+  char poses[9];
   /* The value of the squares that the player can `see' */
 };
 
-#define PLAYER_HERE  0
-#define PLAYER_UP    1
-#define PLAYER_RIGHT 2
-#define PLAYER_DOWN  3
-#define PLAYER_LEFT  4
+#define PLAYER_HERE        0
+#define PLAYER_UP          1
+#define PLAYER_UP_UP       2
+#define PLAYER_RIGHT       3
+#define PLAYER_RIGHT_RIGHT 4
+#define PLAYER_DOWN        5
+#define PLAYER_DOWN_DOWN   6
+#define PLAYER_LEFT        7
+#define PLAYER_LEFT_LEFT   8
 
 typedef struct player player;
 

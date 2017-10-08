@@ -15,7 +15,8 @@ int get_longest_line(FILE *file)
     case EOF:
       goto end;
     case '\n':
-      length = length>length_temp ? temp : length_temp;
+      length = length>length_temp ? length : length_temp;
+      printf("%d\n",length);
       length_temp=0;
       break;
     default:
@@ -55,24 +56,73 @@ int load_level_string(char* name, level* level)
   FILE *file;
   file = fopen(name,"r");
   level->longest_line = get_longest_line(file);
-  printf("longest line %d\n",level->longest_line);
 
   level->no_lines=get_no_lines(file);
-  printf("nolines %d\n",level->no_lines);
   
-  level->dimension=level->longest_line*level->no_lines+level->no_lines;
+  level->dimension=(level->longest_line*level->no_lines+1);/* +level->no_lines; */
 
   level->board_string=malloc(sizeof(char)*level->dimension);
 
   rewind(file);
-
-  for(int i=0; i < level->dimension; i++) {
+  {
+    char pre = fgetc(file);
     char temp = fgetc(file);
-    if (temp != EOF) 
-      level->board_string[i]=temp;
+    for(int i=0; i < level->dimension; i++) {
+      int temp_int = 0;
+      if (temp == '\n')
+	{
+	  pre = pre + 128;
+	  /* mark the newlines */
+	  level->board_string[i]=pre;
+	  pre = fgetc(file);
+	  temp = fgetc(file);
+	  continue;
+	}
+      if (temp == EOF)
+	{
+	  continue;
+	}
+      level->board_string[i]=pre;
+      pre = temp;
+      temp = fgetc(file);
+    }
+    level->board_string[level->dimension] = '\0';
+    fclose(file);
   }
-  fclose(file);
   return 0;
+}
+
+char level_at(level* state, int x, int y){
+  return 0;
+}
+
+char legal_character_p(char thing)
+{
+  char res = thing == '#';
+  res = res | thing == '.';
+  res = res | thing == '@';
+  res = res | thing == '%';
+  return res;
+}
+
+void print_level(level* level)
+{
+  for(int i=0; i < level->dimension; i++) {
+    int temp = level->board_string[i];
+    char test = 0;
+    if (temp > 128)
+      {
+	temp = temp - 128;
+	/* mark the newlines */
+	test = 1;
+      }
+    printf("%c",temp);
+    printf("%d",(temp > 128));
+    if (test == 1) {
+	test = 0;
+	printf("\n");
+      }
+  }
 }
 
 int kill_level(level* level)
