@@ -6,19 +6,20 @@ ARCH='-march=native'
 LIBS = `pkg-config --libs --cflags ncurses lua`
 
 %.o: %.c $(SRC)
-	$(CC) -Os -Wall -c -o  $@ $< $(LIBS)
+	$(CC) -g -Wall -c -o  $@ $< $(LIBS)
 
-make: generic arch
+make: generic
 
 generic: $(MAIN) $(FILES)
-	$(CC) -o sokoban $(FILES) $(MAIN) $(LIBS)
+	$(CC) -g -o sokoban $(FILES) $(MAIN) $(LIBS)
 
-arch: $(MAIN) $(FILES)
-	$(CC) $(ARCH) -Os -o sokoban.arch $(SRC) $(LIBS)
+# arch: $(MAIN) $(FILES)
+# 	$(CC) $(ARCH) -Os -o sokoban.arch $(SRC) $(LIBS)
 
 clean:
 	rm *.o sokoban
 
+new: clean generic
 main.o: main.c
 player.o: player.c
 level.o: level.c
