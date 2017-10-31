@@ -1,14 +1,16 @@
 #include "sokoban.h"
 #include "structs.h"
 
-int get_longest_line(FILE *file)
+int get_longest_line(FILE *file,level *level)
 {
-  rewind(file);
-
   char temp;
   int length = 0;
+  const int start = ftell(file);
+  printf("%d\n",start);
+  rewind(file);
   {
     int length_temp=0;
+    int nth = 0;
   lpstart:
     temp = fgetc(file);
     switch(temp) {
@@ -16,7 +18,7 @@ int get_longest_line(FILE *file)
       goto end;
     case '\n':
       length = length>length_temp ? length : length_temp;
-      printf("%d\n",length);
+      level->line_lengths = length_temp;
       length_temp=0;
       break;
     default:
@@ -53,11 +55,13 @@ int get_no_lines(FILE* file)
 
 int load_level_string(char* name, level* level)
 {
+
   FILE *file;
   file = fopen(name,"r");
-  level->longest_line = get_longest_line(file);
 
   level->no_lines=get_no_lines(file);
+
+  level->longest_line = get_longest_line(file,level);
   
   level->dimension=(level->longest_line*level->no_lines+1);/* +level->no_lines; */
 
@@ -96,13 +100,17 @@ char level_at(level* state, int x, int y){
   return 0;
 }
 
-char legal_character_p(char thing)
+char ilegal_characterp(char thing)
 {
-  char res = thing == '#';
-  res = res | thing == '.';
-  res = res | thing == '@';
-  res = res | thing == '%';
-  return res;
+  char res = 0;
+  res = res |(thing == '#');/* a wall */
+  res = res |(thing == '.');/* a empty floor tile */
+  res = res |(thing == '@');/* the player */
+  res = res |(thing == '%');/* a block */
+  res = res |(thing == 'G');/* a block on a goal floor */
+  res = res |(thing == '=');/* a goal floor */
+  res = res |(thing == '\0');/* to let a level print */
+  return !res;
 }
 
 void print_level(level* level)
@@ -110,14 +118,13 @@ void print_level(level* level)
   for(int i=0; i < level->dimension; i++) {
     int temp = level->board_string[i];
     char test = 0;
-    if (temp > 128)
+    if (ilegal_characterp(temp))
       {
 	temp = temp - 128;
 	/* mark the newlines */
 	test = 1;
       }
     printf("%c",temp);
-    printf("%d",(temp > 128));
     if (test == 1) {
 	test = 0;
 	printf("\n");

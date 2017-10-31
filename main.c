@@ -4,7 +4,6 @@
 #include <curses.h>
 #include "sokoban.h"
 #include "level.h"
-#include "printstack.h"
 
 int main(int argc, char** argv)
 {
